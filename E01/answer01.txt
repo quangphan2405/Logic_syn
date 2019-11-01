@@ -1,0 +1,9 @@
+We corrected the code by replacing line 67 with "next_state <= init;"
+
+We introduced a new bug by replacing line 64 with "IF (to_integer(UNSIGNED(keys_in)) = second_c) THEN". Testbench failed with error "Lock opens with a wrong sequence!".
+
+With force-commands one can generate some arbitrary inputs on simulation time. 
+With testbenches it is easier to benerate inputs which are easy to repeat. One
+can also create self-checking tests with tesbenches utilizing assertions.
+
+There are 5 states in the testbench state machine.
