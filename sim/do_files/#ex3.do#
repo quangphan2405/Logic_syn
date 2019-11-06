@@ -1,0 +1,7 @@
+restart -f
+vcom -check_synthesis ../vhd/adder.vhd ../tb/tb_adder.vhd
+
+vsim work.tb_adder
+add wave *
+property wave -radix decimal *
+run 7ms

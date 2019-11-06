@@ -1,0 +1,259 @@
+couldn't open "transcript": permission denied
+# Reading C:/Apps/MODELTECH_10.2C/tcl/vsim/pref.tcl 
+# //  ModelSim SE 10.2c Jul 18 2013 
+# //
+# //  Copyright 1991-2013 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+
+cd P:/
+ls
+# .bash_history  .viminfo    StudentDocuments      logic_synthesis  vivado    
+# .gitconfig     HDS         digitaalisuunnittelu  logsyn                     
+# .ssh           INTRA_HOME  ex1_tutorial          vhd                        
+cd logsyn
+ls
+# .gitignore  E02        doc  syn  verilog  work  
+# E01         README.md  sim  tb   vhd      xdc   
+vlib work
+# ** Error: (vlib-35) Failed to create directory "work".
+# 
+# File exists. (errno = EEXIST)
+
+rmdir work
+# The directory is not empty.
+ls work
+# 
+# work:
+# _info                                                                                                                                                                
+rm -rf work
+# ambiguous command name "rm": rmdb rmdb_image
+rm work/_info
+# ambiguous command name "rm": rmdb rmdb_image
+vlib work
+cd sim
+wmap work ../work
+# invalid command name "wmap"
+vmap work ../work
+# Copying C:/Apps/MODELTECH_10.2C/win32/../modelsim.ini to modelsim.ini
+# Modifying modelsim.ini
+# ** Warning: Copied C:/Apps/MODELTECH_10.2C/win32/../modelsim.ini to modelsim.ini.
+#          Updated modelsim.ini.
+vcom -check_synthesis ../vhd/ripple_carry_adder.vhd
+# Model Technology ModelSim SE vcom 10.2c Compiler 2013.07 Jul 18 2013
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity ripple_carry_adder
+# ** Error: ../vhd/ripple_carry_adder.vhd(29): near ")": expecting IDENTIFIER
+# C:/Apps/MODELTECH_10.2C/win32/vcom failed.
+vcom -check_synthesis ../vhd/ripple_carry_adder.vhd
+# Model Technology ModelSim SE vcom 10.2c Compiler 2013.07 Jul 18 2013
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity ripple_carry_adder
+# -- Compiling architecture gate of ripple_carry_adder
+vcom -check_synthesis ../tb/tb_ripple_carry_adder.vhd
+# Model Technology ModelSim SE vcom 10.2c Compiler 2013.07 Jul 18 2013
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity tb_ripple_carry_adder
+# -- Compiling architecture testbench of tb_ripple_carry_adder
+vsim work.tb_ripple_carry_adder
+# vsim work.tb_ripple_carry_adder 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.tb_ripple_carry_adder(testbench)#1
+# Loading work.ripple_carry_adder(gate)#1
+add wave -position insertpoint  \
+sim:/tb_ripple_carry_adder/clk \
+sim:/tb_ripple_carry_adder/rst_n \
+sim:/tb_ripple_carry_adder/term1_r \
+sim:/tb_ripple_carry_adder/term2_r \
+sim:/tb_ripple_carry_adder/sum \
+sim:/tb_ripple_carry_adder/sum_slv \
+sim:/tb_ripple_carry_adder/input_w_c \
+sim:/tb_ripple_carry_adder/output_w_c \
+sim:/tb_ripple_carry_adder/clk_period_c
+add wave -position insertpoint  \
+sim:/tb_ripple_carry_adder/clk \
+sim:/tb_ripple_carry_adder/rst_n \
+sim:/tb_ripple_carry_adder/term1_r \
+sim:/tb_ripple_carry_adder/term2_r \
+sim:/tb_ripple_carry_adder/sum \
+sim:/tb_ripple_carry_adder/sum_slv \
+sim:/tb_ripple_carry_adder/input_w_c \
+sim:/tb_ripple_carry_adder/output_w_c \
+sim:/tb_ripple_carry_adder/clk_period_c
+run
+# ** Failure: Simulation ended!
+#    Time: 6550 ns  Iteration: 0  Process: /tb_ripple_carry_adder/input_gen_output_check File: ../tb/tb_ripple_carry_adder.vhd
+# Break in Process input_gen_output_check at ../tb/tb_ripple_carry_adder.vhd line 108
+# Causality operation skipped due to absence of debug database file
+run
+# ** Failure: Simulation ended!
+#    Time: 7350 ns  Iteration: 0  Process: /tb_ripple_carry_adder/input_gen_output_check File: ../tb/tb_ripple_carry_adder.vhd
+# Break in Process input_gen_output_check at ../tb/tb_ripple_carry_adder.vhd line 108
+vsim -
+# ** Error: (vish-3296) Unknown option '-'.
+# Use the -help option for complete vsim usage.
+# Error loading design
+vcom -check_synthesis ../vhd/adder.vhd ../tb/tb_adder.vhd
+# Model Technology ModelSim SE vcom 10.2c Compiler 2013.07 Jul 18 2013
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity adder
+# -- Compiling architecture rtl of adder
+# ** Error: ../vhd/adder.vhd(37): (vcom-1136) Unknown identifier "signed".
+# 
+# ** Error: ../vhd/adder.vhd(39): Illegal type conversion to ieee.std_logic_1164.STD_LOGIC_VECTOR (operand type is not known).
+# ** Error: ../vhd/adder.vhd(40): near ")": expecting STRING or IDENTIFIER or ALL or <<
+# ** Error: ../tb/tb_adder.vhd(22): VHDL Compiler exiting
+# C:/Apps/MODELTECH_10.2C/win32/vcom failed.
+vcom -check_synthesis ../vhd/adder.vhd ../tb/tb_adder.vhd
+# Model Technology ModelSim SE vcom 10.2c Compiler 2013.07 Jul 18 2013
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity adder
+# -- Compiling architecture rtl of adder
+# ** Error: ../vhd/adder.vhd(37): (vcom-1136) Unknown identifier "signed".
+# 
+# ** Error: ../vhd/adder.vhd(39): Illegal type conversion to ieee.std_logic_1164.STD_LOGIC_VECTOR (operand type is not known).
+# ** Error: ../vhd/adder.vhd(40): near ")": expecting STRING or IDENTIFIER or ALL or <<
+# ** Error: ../tb/tb_adder.vhd(22): VHDL Compiler exiting
+# C:/Apps/MODELTECH_10.2C/win32/vcom failed.
+vcom -check_synthesis ../vhd/adder.vhd ../tb/tb_adder.vhd
+# Model Technology ModelSim SE vcom 10.2c Compiler 2013.07 Jul 18 2013
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity adder
+# -- Compiling architecture rtl of adder
+# ** Error: ../vhd/adder.vhd(37): (vcom-1136) Unknown identifier "signed".
+# 
+# ** Error: ../vhd/adder.vhd(39): Illegal type conversion to ieee.std_logic_1164.STD_LOGIC_VECTOR (operand type is not known).
+# ** Error: ../vhd/adder.vhd(40): near ")": expecting STRING or IDENTIFIER or ALL or <<
+# ** Error: ../tb/tb_adder.vhd(22): VHDL Compiler exiting
+# C:/Apps/MODELTECH_10.2C/win32/vcom failed.
+vcom -check_synthesis ../vhd/adder.vhd ../tb/tb_adder.vhd
+# Model Technology ModelSim SE vcom 10.2c Compiler 2013.07 Jul 18 2013
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity adder
+# -- Compiling architecture rtl of adder
+# ** Error: ../vhd/adder.vhd(41): near ")": expecting STRING or IDENTIFIER or ALL or <<
+# ** Error: ../tb/tb_adder.vhd(22): VHDL Compiler exiting
+# C:/Apps/MODELTECH_10.2C/win32/vcom failed.
+vcom -check_synthesis ../vhd/adder.vhd ../tb/tb_adder.vhd
+# Model Technology ModelSim SE vcom 10.2c Compiler 2013.07 Jul 18 2013
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity adder
+# -- Compiling architecture rtl of adder
+# ** Warning: ../vhd/adder.vhd(41): Synthesis Warning: Signal 'a_in' appears in the sensitivity list of process 'sync', but it is not used in the clock or reset expressions.
+# ** Warning: ../vhd/adder.vhd(41): Synthesis Warning: Signal 'b_in' appears in the sensitivity list of process 'sync', but it is not used in the clock or reset expressions.
+# ** Error: ../vhd/adder.vhd(49): Labels do not match: 'rtl' and 'gate'.
+# ** Error: ../vhd/adder.vhd(49): VHDL Compiler exiting
+# C:/Apps/MODELTECH_10.2C/win32/vcom failed.
+vcom -check_synthesis ../vhd/adder.vhd ../tb/tb_adder.vhd
+# Model Technology ModelSim SE vcom 10.2c Compiler 2013.07 Jul 18 2013
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity adder
+# -- Compiling architecture rtl of adder
+# ** Warning: ../vhd/adder.vhd(41): Synthesis Warning: Signal 'a_in' appears in the sensitivity list of process 'sync', but it is not used in the clock or reset expressions.
+# ** Warning: ../vhd/adder.vhd(41): Synthesis Warning: Signal 'b_in' appears in the sensitivity list of process 'sync', but it is not used in the clock or reset expressions.
+# -- Compiling entity tb_adder
+# -- Compiling architecture testbench of tb_adder
+vcom -check_synthesis ../vhd/adder.vhd ../tb/tb_adder.vhd
+# Model Technology ModelSim SE vcom 10.2c Compiler 2013.07 Jul 18 2013
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity adder
+# -- Compiling architecture rtl of adder
+# -- Compiling entity tb_adder
+# -- Compiling architecture testbench of tb_adder
+vsim work.tb_adder
+# vsim work.tb_adder 
+# ** Note: (vsim-3812) Design is being optimized...
+# 
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.tb_adder(testbench)#1
+# Loading work.adder(rtl)#1
+add wave -position insertpoint  \
+sim:/tb_adder/clk \
+sim:/tb_adder/rst_n \
+sim:/tb_adder/term1_r \
+sim:/tb_adder/term2_r \
+sim:/tb_adder/sum \
+sim:/tb_adder/expected_sum_r \
+sim:/tb_adder/end_simulation_r \
+sim:/tb_adder/input_w_c \
+sim:/tb_adder/output_w_c \
+sim:/tb_adder/clk_period_c \
+sim:/tb_adder/min_value_c \
+sim:/tb_adder/max_value_c
+run
+# ** Failure: output signal is not equal to the sum of the inputs
+#    Time: 350 ns  Iteration: 0  Process: /tb_adder/input_gen_output_check File: ../tb/tb_adder.vhd
+# Break in Process input_gen_output_check at ../tb/tb_adder.vhd line 133
+vcom -check_synthesis ../vhd/adder.vhd ../tb/tb_adder.vhd
+# Model Technology ModelSim SE vcom 10.2c Compiler 2013.07 Jul 18 2013
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity adder
+# -- Compiling architecture rtl of adder
+# -- Compiling entity tb_adder
+# -- Compiling architecture testbench of tb_adder
+vsim work.tb_adder
+# vsim work.tb_adder 
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.tb_adder(testbench)#1
+# Loading work.adder(rtl)#1
+add wave -position insertpoint  \
+sim:/tb_adder/clk \
+sim:/tb_adder/rst_n \
+sim:/tb_adder/term1_r \
+sim:/tb_adder/term2_r \
+sim:/tb_adder/sum \
+sim:/tb_adder/expected_sum_r \
+sim:/tb_adder/end_simulation_r \
+sim:/tb_adder/input_w_c \
+sim:/tb_adder/output_w_c \
+sim:/tb_adder/clk_period_c \
+sim:/tb_adder/min_value_c \
+sim:/tb_adder/max_value_c
+# Can't move the Now cursor.
+run
+# ** Failure: output signal is not equal to the sum of the inputs
+#    Time: 350 ns  Iteration: 0  Process: /tb_adder/input_gen_output_check File: ../tb/tb_adder.vhd
+# Break in Process input_gen_output_check at ../tb/tb_adder.vhd line 133
