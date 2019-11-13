@@ -1,0 +1,12 @@
+- We are using adders with two input ports which requires a power of 
+two adders so that every output can be directed to new layer of adders.
+If the count is not pre-defined, it's difficult to instantiate the 
+number of adders to fulfill the calculation.
+
+- Structural is a structure of sequential component 'adder' which operates
+as a combinational componnent. The structural does not use clock and 
+register directly but only through its subcomponents.
+
+- In VHDL, we separate the bigger task into smaller ones which can be 
+implemented as a simple entity, and then instantiating them as 
+components in a composing entity.
