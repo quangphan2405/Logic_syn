@@ -1,2 +1,6 @@
 syn/
 work/
+**~
+vhd/.settings
+vhd/.library_mapping.xml
+vhd/.project
