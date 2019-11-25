@@ -4,3 +4,7 @@ work/
 vhd/.settings
 vhd/.library_mapping.xml
 vhd/.project
+
+tb/.settings
+tb/.library_mapping.xml
+tb/.project
