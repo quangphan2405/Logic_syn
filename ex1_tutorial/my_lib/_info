@@ -1,0 +1,82 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dD:/Logic Synthesis/21/ex1_tutorial
+T_opt
+!s110 1573597610
+VJR6]Ebh`ON;VkFKS39SbK0
+04 4 3 work lock rtl 1
+=1-04d4c46f9e25-5dcb31a9-3d6-2214
+o-quiet -auto_acc_if_foreign -work my_lib
+tCvgOpt 0
+n@_opt
+OE;O;10.7d;67
+R0
+Elock
+Z1 w1573597260
+Z2 DPx4 work 8 lock_pkg 0 22 GcM7Xz1S8F[_TVB:OLKzJ2
+Z3 DPx4 ieee 11 numeric_std 0 22 aU^R8eGcicLcUFIaBQSL>3
+Z4 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z5 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
+Z6 dd:/Logic_Synthesis/21/ex1_tutorial
+Z7 8vhd/lock.vhd
+Z8 Fvhd/lock.vhd
+l0
+L6
+VTlMKEkdCS]n@0J9@_41oN2
+!s100 @@TEdSC8i4`Fj<`RgEEW[1
+Z9 OE;C;10.7d;67
+32
+Z10 !s110 1573598254
+!i10b 1
+Z11 !s108 1573598254.000000
+Z12 !s90 -reportprogress|300|-check_synthesis|vhd/lock_pkg.vhd|vhd/lock.vhd|
+!s107 vhd/lock.vhd|vhd/lock_pkg.vhd|
+!i113 0
+Z13 o-check_synthesis
+Z14 tExplicit 1 CvgOpt 0
+Artl
+R2
+R3
+R4
+R5
+Z15 DEx4 work 4 lock 0 22 TlMKEkdCS]n@0J9@_41oN2
+l26
+L19
+Z16 VTlVj=46mcFn3@Ch=<]Lb:3
+Z17 !s100 I^97>>kN2@@L1>a]>eOGU3
+R9
+32
+R10
+!i10b 1
+R11
+R12
+Z18 !s107 vhd/lock.vhd|vhd/lock_pkg.vhd|
+!i113 0
+R13
+R14
+Plock_pkg
+w1573597256
+R6
+8vhd/lock_pkg.vhd
+Fvhd/lock_pkg.vhd
+l0
+L1
+VGcM7Xz1S8F[_TVB:OLKzJ2
+!s100 89EhC@[7N>NoGmUm[NWea1
+R9
+32
+R10
+!i10b 1
+R11
+R12
+R18
+!i113 0
+R13
+R14
