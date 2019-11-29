@@ -45,7 +45,7 @@ architecture testbench of tb_multi_port_adder is
 	file ref_results_f : text open READ_MODE is "ref_results.txt";
 	file output_f      : text open WRITE_MODE is "output.txt";
 
-	component generic_multi_port_adder
+	component multi_port_adder
 		generic(
 			operand_width_g   : integer;
 			num_of_operands_g : integer
@@ -55,13 +55,13 @@ architecture testbench of tb_multi_port_adder is
 			operands_in : in  std_logic_vector(operand_width_g * num_of_operands_g - 1 downto 0);
 			sum_out     : out std_logic_vector(operand_width_g - 1 downto 0)
 		);
-	end component generic_multi_port_adder;
+	end component multi_port_adder;
 
 begin
 	clk   <= not clk after period_c / 2;
 	rst_n <= '1' after period_c * 4;
 
-	i_adder : component generic_multi_port_adder
+	i_adder : component multi_port_adder
 		generic map(
 			operand_width_g   => operand_width_g,
 			num_of_operands_g => num_of_operands_c
