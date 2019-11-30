@@ -36,21 +36,25 @@ end entity sine_wave_gen;
 
 architecture RTL of sine_wave_gen is
 
-	-- Quantization is made by 13-bit shift, so max input value for sine function
-	-- is 2^13=8192. Value is also adjusted to be divisible by frequency.
+	-- Fixed point calculation is made by shifting input 13 bit to left and output 13 bit to right.
+	-- Input range for sine function is [-1, 1], which is [-2^13, 2^13] after shifting.
+	-- 2^13 = 8192
+	-- This value is then adjusted to be divisible by frequency.
 	constant x_max         : integer   := (8192 / freq_g) * freq_g;
 	constant x_min         : integer   := -x_max;
+	-- 13 bit for value, one for sign and one extra, because sine function input range is symmetric.
+	constant x_width : integer := 15;
 	constant upwards_dir_c : std_logic := '1';
 
 	signal direction     : std_logic;
-	signal x_current     : signed(15 downto 0);
+	signal x_current     : signed(x_width downto 0);
 	signal current_value : signed(15 downto 0);
 
 	-- Function for calculating fixed point 32-bit sine value.
 	-- Uses fifth order polynomial approximation described here: http://www.coranac.com/2009/07/sines/
 	-- Credits and more info about fixed-point calculation of approximation:
 	-- https://www.nullhardware.com/blog/fixed-point-sine-and-cosine-for-embedded-systems/
-	pure function sine(x : signed(15 downto 0)) return signed is
+	pure function sine(x : signed(x_width downto 0)) return signed is
 		-- Precalculated constants. First two are over 32-bit, so them can not be initialized with integer.
 		constant A1 : unsigned := resize(x"C8EC8A4B", 64);
 		constant B1 : unsigned := resize(x"A3B2292C", 64);
@@ -62,8 +66,8 @@ architecture RTL of sine_wave_gen is
 		constant q  : integer  := 31;
 		constant r  : integer  := 3;
 
-		-- Take absolute value of input, convert to unsigned and resize it to 32-bit long.
-		constant x_32 : unsigned(31 downto 0) := resize(unsigned(abs (x)), 32);
+		-- Take absolute value of input and convert it to unsigned. Sign of output will be set on the end.
+		constant x_abs : unsigned := unsigned(abs (x));
 
 		-- Because calculation is so complex, local variable is used to make it more readable.	
 		constant y_width : integer := 32;
@@ -71,12 +75,12 @@ architecture RTL of sine_wave_gen is
 
 	begin
 		-- See the link above for explanation for these statements.
-		y := resize(shift_right(C1 * x_32, n), y_width);
-		y := resize(B1 - shift_right(x_32 * y, r), y_width);
-		y := resize(x_32 * shift_right(y, n), y_width);
-		y := resize(x_32 * shift_right(y, n), y_width);
+		y := resize(shift_right(C1 * x_abs, n), y_width);
+		y := resize(B1 - shift_right(x_abs * y, r), y_width);
+		y := resize(x_abs * shift_right(y, n), y_width);
+		y := resize(x_abs * shift_right(y, n), y_width);
 		y := resize(A1 - shift_right(y, p - q), y_width);
-		y := resize(x_32 * shift_right(y, n), y_width);
+		y := resize(x_abs * shift_right(y, n), y_width);
 		y := shift_right(y + shift_left(to_unsigned(1, y_width), q - a - 1), q - a);
 
 		-- Check sign of the input and adjust sign of the output accordingly.
