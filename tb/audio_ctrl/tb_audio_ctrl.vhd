@@ -8,22 +8,25 @@ end entity tb_audio_ctrl;
 
 architecture testbench of tb_audio_ctrl is
 
-	constant period_c                 : time    := 24 ns;
+	constant period_c                 : time    := 20 ns;
 	constant wave_gen_sync_clear_time : time    := 4 ms;
-	constant ref_clk_freq_c           : integer := 1000000000 ns / period_c;
-	constant sample_rate_c            : integer := 38000;
+	constant ref_clk_freq_c           : integer := 1 sec / period_c;
+	constant sample_rate_c            : integer := 48000;
 
 	signal clk                   : std_logic := '0';
 	signal rst_n                 : std_logic := '0';
 	signal wave_gen_sync_clear_n : std_logic := '1';
 
+	-- Outputs of wave generators.
 	signal left_wave_gen_data  : std_logic_vector(data_width_g - 1 downto 0);
 	signal right_wave_gen_data : std_logic_vector(data_width_g - 1 downto 0);
 
-	signal left_audio_data  : std_logic_vector(data_width_g - 1 downto 0);
-	signal right_audio_data : std_logic_vector(data_width_g - 1 downto 0);
-
+	-- Outputs of DUV (audio codec controller)
 	signal aud_bclk, aud_lrclk, aud_data : std_logic;
+
+	-- Outputs of audio codec model.
+	signal left_audio_codec_data  : std_logic_vector(data_width_g - 1 downto 0);
+	signal right_audio_codec_data : std_logic_vector(data_width_g - 1 downto 0);
 
 	component wave_gen
 		generic(
@@ -57,11 +60,25 @@ architecture testbench of tb_audio_ctrl is
 		);
 	end component audio_codec_module;
 
+	component audio_ctrl_tester_module
+		generic(
+			data_width_g : integer
+		);
+		port(
+			clk, rst_n                                          : in std_logic;
+			lrclk_in                                            : in std_logic;
+			left_wave_gen_data_in, right_wave_gen_data_in       : in std_logic_vector(data_width_g - 1 downto 0);
+			left_audio_codec_data_in, right_audio_codec_data_in : in std_logic_vector(data_width_g - 1 downto 0)
+		);
+	end component audio_ctrl_tester_module;
+
 begin
+	-- Initialization of clock and reset signals.
 	clk                   <= not clk after period_c / 2;
 	rst_n                 <= '1' after period_c * 4;
 	wave_gen_sync_clear_n <= '0' after wave_gen_sync_clear_time, '1' after wave_gen_sync_clear_time + period_c;
 
+	-- Component instantiation.
 	i_wave_gen_left : component wave_gen
 		generic map(
 			width_g => data_width_g,
@@ -111,8 +128,22 @@ begin
 			aud_bclk_in     => aud_bclk,
 			aud_lrclk_in    => aud_lrclk,
 			aud_data_in     => aud_data,
-			value_left_out  => left_audio_data,
-			value_right_out => right_audio_data
+			value_left_out  => left_audio_codec_data,
+			value_right_out => right_audio_codec_data
+		);
+
+	i_audio_ctrl_tester_module : component audio_ctrl_tester_module
+		generic map(
+			data_width_g => data_width_g
+		)
+		port map(
+			clk                       => clk,
+			rst_n                     => rst_n,
+			lrclk_in                  => aud_lrclk,
+			left_wave_gen_data_in     => left_wave_gen_data,
+			right_wave_gen_data_in    => right_wave_gen_data,
+			left_audio_codec_data_in  => left_audio_codec_data,
+			right_audio_codec_data_in => right_audio_codec_data
 		);
 
 end architecture testbench;

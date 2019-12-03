@@ -20,9 +20,9 @@ architecture RTL of audio_codec_module is
 	type states_type is (wait_for_input, read_left, read_right);
 	signal curr_state_r : states_type;
 	-- Buffer for input. LSB does not need buffer, so length is one bit shorted than data_width_g.
-	signal curr_word_r  : std_logic_vector(data_width_g - 2 downto 0);
+	signal curr_word_r  : std_logic_vector(data_width_g - 1 downto 1);
 	-- Index of bit to read. Value -1 indicates that word is fully read.
-	signal bit_index_r  : integer range -1 to (curr_word_r'high - 1);
+	signal bit_index_r  : integer range -1 to curr_word_r'high - 1;
 
 	signal value_left_out_r, value_right_out_r : std_logic_vector(data_width_g - 1 downto 0);
 
@@ -50,7 +50,7 @@ begin
 		begin
 			if (bit_index_r = 0) then
 				-- End of the word, collect the LSB and set the output.
-				value_out   <= curr_word_r(curr_word_r'high downto 0) & aud_data_in;
+				value_out   <= curr_word_r & aud_data_in;
 				-- Set the index to -1 so that next branch will not execute before next state transition.
 				bit_index_r <= -1;
 			elsif (bit_index_r /= -1) then
