@@ -8,10 +8,10 @@ end entity tb_audio_ctrl;
 
 architecture testbench of tb_audio_ctrl is
 
-	constant period_c                 : Time    := 50 ns;
-	constant wave_gen_sync_clear_time : Time    := 5 ms;
-	constant ref_clk_freq_c           : integer := 20000000;
-	constant sample_rate_c            : integer := 48000;
+	constant period_c                 : time    := 24 ns;
+	constant wave_gen_sync_clear_time : time    := 4 ms;
+	constant ref_clk_freq_c           : integer := 1000000000 ns / period_c;
+	constant sample_rate_c            : integer := 38000;
 
 	signal clk                   : std_logic := '0';
 	signal rst_n                 : std_logic := '0';
