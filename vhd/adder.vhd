@@ -37,8 +37,6 @@ end adder;
 architecture rtl of adder is
 	signal result : signed(operand_width_g downto 0) := (others => '0');
 begin
-	-- register for the result
-	sum_out <= std_logic_vector(result);
 	sync : process(clk, rst_n)
 	begin
 		if (rst_n = '0') then
@@ -48,4 +46,6 @@ begin
 			result <= resize(signed(a_in), operand_width_g + 1) + resize(signed(b_in), operand_width_g + 1);
 		end if;
 	end process sync;
+	
+	sum_out <= std_logic_vector(result);
 end rtl;

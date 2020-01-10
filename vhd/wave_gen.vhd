@@ -25,8 +25,8 @@ use ieee.numeric_std.all;
 
 entity wave_gen is
   generic(
-    width_g : integer;
-    step_g  : integer
+	    width_g : integer;
+	    step_g  : integer
     );
   port(
     clk, rst_n, sync_clear_n_in : in  std_logic;

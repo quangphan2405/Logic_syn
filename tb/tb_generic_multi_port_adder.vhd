@@ -1,22 +1,22 @@
 -------------------------------------------------------------------------------
--- Title      : Multi port adder test bench
+-- Title      : Generic multi port adder test bench
 -- Project    : 
 -------------------------------------------------------------------------------
--- File       : tb_multi_port_adder.vhd
+-- File       : tb_generic_multi_port_adder.vhd
 -- Author     : Group 21
 -- Company    : 
--- Created    : 2019-11-21
--- Last update: 2019-11-21
+-- Created    : 2019-11-29
+-- Last update: 2019-11-29
 -- Platform   : 
 -- Standard   : VHDL'93/02
 -------------------------------------------------------------------------------
--- Description: Multi port adder test bench
+-- Description: Generic multi port adder test bench, mostly copied from tb_multi_port_adder.
 -------------------------------------------------------------------------------
 -- Copyright (c) 2019 
 -------------------------------------------------------------------------------
 -- Revisions  :
 -- Date        Version  Author  			Description
--- 2019-11-21  1.0      Paulus Limma  Created
+-- 2019-11-29  1.0      Paulus Limma  		Created
 -------------------------------------------------------------------------------
 
 library ieee;
@@ -24,13 +24,14 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 use std.textio.all;
 
-entity tb_multi_port_adder is
+entity tb_generic_multi_port_adder is
 	generic(operand_width_g : integer := 3);
-end entity tb_multi_port_adder;
+end entity tb_generic_multi_port_adder;
 
-architecture testbench of tb_multi_port_adder is
+architecture testbench of tb_generic_multi_port_adder is
 	constant period_c          : Time    := 10 ns;
-	constant num_of_operands_c : integer := 4;
+	constant n_c               : integer := 2;
+	constant num_of_operands_c : integer := n_c ** 2;
 	constant duv_delay_c       : integer := 2;
 
 	signal clk            : std_logic := '0';
@@ -45,26 +46,26 @@ architecture testbench of tb_multi_port_adder is
 	file ref_results_f : text open READ_MODE is "ref_results.txt";
 	file output_f      : text open WRITE_MODE is "output.txt";
 
-	component multi_port_adder
+	component generic_multi_port_adder
 		generic(
-			operand_width_g   : integer;
-			num_of_operands_g : integer
+			operand_width_g : integer;
+			n_g             : integer
 		);
 		port(
 			clk, rst_n  : in  std_logic;
-			operands_in : in  std_logic_vector(operand_width_g * num_of_operands_g - 1 downto 0);
+			operands_in : in  std_logic_vector(operand_width_g * (n_g ** 2) - 1 downto 0);
 			sum_out     : out std_logic_vector(operand_width_g - 1 downto 0)
 		);
-	end component multi_port_adder;
+	end component generic_multi_port_adder;
 
 begin
 	clk   <= not clk after period_c / 2;
 	rst_n <= '1' after period_c * 4;
 
-	i_adder : component multi_port_adder
+	i_adder : component generic_multi_port_adder
 		generic map(
-			operand_width_g   => operand_width_g,
-			num_of_operands_g => num_of_operands_c
+			operand_width_g => operand_width_g,
+			n_g             => n_c
 		)
 		port map(
 			clk         => clk,
@@ -91,8 +92,7 @@ begin
 				for i in 3 downto 0 loop
 					read(line_v, input_values_v(i));
 					-- Set corresponding bits of operands_r to the value of input_values_v(i).
-					operands_r((i + 1) * operand_width_g - 1 downto i * operand_width_g) 
-						<= std_logic_vector(to_signed(input_values_v(i), operand_width_g));
+					operands_r((i + 1) * operand_width_g - 1 downto i * operand_width_g) <= std_logic_vector(to_signed(input_values_v(i), operand_width_g));
 				end loop;
 			end if;
 		end if;
