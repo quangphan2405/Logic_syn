@@ -26,10 +26,8 @@ architecture RTL of audio_ctrl is
 	-- Calculate required number of steps to bclk counter.
 	constant min_bclk_period_c        : integer := 75; -- ns, read from datasheet.
 	constant one_second_as_nanos_c    : integer := 1000000000;
-	-- Minimum amount of steps. One step is add to round up, or to add safety marginal if division is exact.
-	constant min_bclk_counter_steps_c : integer := (min_bclk_period_c / (one_second_as_nanos_c / ref_clk_freq_g) / 2) + 1;
-	-- Synchronize bclk with lrclk.
-	constant bclk_counter_steps_c     : integer := lrclk_counter_steps_c / (lrclk_counter_steps_c / min_bclk_counter_steps_c);
+	-- One step is add to round up, or to add safety marginal if division is exact.
+	constant bclk_counter_steps_c : integer := (min_bclk_period_c / (one_second_as_nanos_c / ref_clk_freq_g) / 2) + 1;
 
 	-- Registers for samples and currently transmitted bit index.
 	signal left_sample_r, right_sample_r : std_logic_vector(data_width_g - 1 downto 0);
