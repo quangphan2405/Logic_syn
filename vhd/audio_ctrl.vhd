@@ -1,3 +1,14 @@
+-------------------------------------------------------------------------------
+-- Title      : Exercise 07, audio control module
+-- Project    : 
+-------------------------------------------------------------------------------
+-- File       : audio_ctrl.vhd
+-- Author     : Group 21
+-- Company    : 
+-- Platform   : 
+-- Standard   : VHDL'93/02
+-------------------------------------------------------------------------------
+
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;

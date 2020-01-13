@@ -2,7 +2,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity audio_codec_module is
+entity audio_codec_model is
 	generic(
 		data_width_g : integer := 16
 	);
@@ -13,9 +13,9 @@ entity audio_codec_module is
 		aud_data_in                     : in  std_logic;
 		value_left_out, value_right_out : out std_logic_vector(data_width_g - 1 downto 0)
 	);
-end entity audio_codec_module;
+end entity audio_codec_model;
 
-architecture RTL of audio_codec_module is
+architecture RTL of audio_codec_model is
 
 	type states_type is (wait_for_input, read_left, read_right);
 	signal curr_state_r : states_type;

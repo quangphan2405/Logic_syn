@@ -51,14 +51,14 @@ architecture testbench of tb_audio_ctrl is
 			aud_bclk_out, aud_lrclk_out, aud_data_out : out std_logic);
 	end component audio_ctrl;
 
-	component audio_codec_module
+	component audio_codec_model
 		generic(data_width_g : integer);
 		port(
 			rst_n                                  : in  std_logic;
 			aud_bclk_in, aud_lrclk_in, aud_data_in : in  std_logic;
 			value_left_out, value_right_out        : out std_logic_vector(data_width_g - 1 downto 0)
 		);
-	end component audio_codec_module;
+	end component audio_codec_model;
 
 	component audio_ctrl_tester_module
 		generic(
@@ -119,7 +119,7 @@ begin
 			aud_data_out  => aud_data
 		);
 
-	i_audio_codec_module : component audio_codec_module
+	i_audio_codec_module : component audio_codec_model
 		generic map(
 			data_width_g => data_width_g
 		)
