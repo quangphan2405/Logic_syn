@@ -1,3 +1,20 @@
+-------------------------------------------------------------------------------
+-- Title      : Ex8, audio control tester module
+-------------------------------------------------------------------------------
+-- File       : audio_ctrl_tester_module.vhd
+-- Author     : Group 21
+-- Standard   : VHDL'93/02
+-------------------------------------------------------------------------------
+-- Description: Checks that the input of audio controller and output of
+--				audio codec module are consistent.
+-------------------------------------------------------------------------------
+-- Copyright (c) 2019 
+-------------------------------------------------------------------------------
+-- Revisions  :
+-- Date        Version  Author  			Description
+-- 2019-12-3   1.0      limmap			    Created
+-------------------------------------------------------------------------------
+
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
