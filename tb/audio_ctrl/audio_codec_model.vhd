@@ -54,7 +54,7 @@ begin
 		begin
 			curr_state_r <= next_state;
 			-- First bit must be read at this stage.
-			curr_word_r  <= (curr_word_r'high => aud_data_in, others => '0');		
+			curr_word_r  <= (data_width_g - 1 => aud_data_in, others => '0');		
 			bit_index_r  <= curr_word_r'high - 1;
 		end procedure;
 		
