@@ -10,6 +10,7 @@
   <Mappings Location="E05" Library="not mapped"/>
   <Mappings Location="E06" Library="not mapped"/>
   <Mappings Location="E07" Library="not mapped"/>
+  <Mappings Location="E08" Library="not mapped"/>
   <Mappings Location="sim" Library="not mapped"/>
   <Mappings Location="Common Libraries/STD" Library="std"/>
   <Mappings Location="" Library="work"/>

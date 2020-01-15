@@ -76,18 +76,6 @@ architecture testbench of tb_audio_ctrl is
 		);
 	end component audio_codec_model;
 
-	component audio_ctrl_tester_module
-		generic(
-			data_width_g : integer
-		);
-		port(
-			clk, rst_n                                          : in std_logic;
-			lrclk_in                                            : in std_logic;
-			left_wave_gen_data_in, right_wave_gen_data_in       : in std_logic_vector(data_width_g - 1 downto 0);
-			left_audio_codec_data_in, right_audio_codec_data_in : in std_logic_vector(data_width_g - 1 downto 0)
-		);
-	end component audio_ctrl_tester_module;
-
 begin
 	-- Initialization of clock and reset signals.
 	clk                   <= not clk after period_c / 2;
@@ -148,18 +136,5 @@ begin
 			value_right_out => right_audio_codec_data
 		);
 
-	i_audio_ctrl_tester_module : component audio_ctrl_tester_module
-		generic map(
-			data_width_g => data_width_g
-		)
-		port map(
-			clk                       => clk,
-			rst_n                     => rst_n,
-			lrclk_in                  => aud_lrclk,
-			left_wave_gen_data_in     => left_wave_gen_data,
-			right_wave_gen_data_in    => right_wave_gen_data,
-			left_audio_codec_data_in  => left_audio_codec_data,
-			right_audio_codec_data_in => right_audio_codec_data
-		);
 
 end architecture testbench;
