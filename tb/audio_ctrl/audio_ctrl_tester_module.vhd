@@ -29,12 +29,12 @@ architecture RTL of audio_ctrl_tester_module is
 
 	-- Helper function for converting std_logic_vector to string.
 	function slv_to_string(vec : std_logic_vector) return string is
-		variable b : string(vec'length - 1 downto 0) := (others => NUL);
+		variable ret : string(vec'length downto 1) := (others => NUL);
 	begin
-		for i in vec'length - 1 downto 0 loop
-			b(i) := std_logic'image(vec(i))(2);
+		for i in vec'length - 1  downto 0 loop
+			ret(i + 1) := std_logic'image(vec(i))(2);
 		end loop;
-		return b;
+		return ret;
 	end function;
 
 	-- Procedure for executing the assertion for left or right channel.
