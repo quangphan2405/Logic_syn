@@ -1,3 +1,20 @@
+-------------------------------------------------------------------------------
+-- Title      : Ex8, audio codec model for tb_audio_ctrl
+-------------------------------------------------------------------------------
+-- File       : audio_codec_model.vhd
+-- Author     : Group 21
+-- Standard   : VHDL'93/02
+-------------------------------------------------------------------------------
+-- Description: Simulates physical audio codec, 
+--				basicly converts serial input to paraller output
+-------------------------------------------------------------------------------
+-- Copyright (c) 2019 
+-------------------------------------------------------------------------------
+-- Revisions  :
+-- Date        Version  Author  			Description
+-- 2019-12-3   1.0      limmap			    Created
+-------------------------------------------------------------------------------
+
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
