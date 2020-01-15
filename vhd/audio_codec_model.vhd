@@ -6,7 +6,7 @@
 -- Author     : Quang
 -- Company    : 
 -- Created    : 2020-01-03
--- Last update: 2020-01-08
+-- Last update: 2020-01-14
 -- Platform   : 
 -- Standard   : VHDL'93/02
 -------------------------------------------------------------------------------
@@ -45,92 +45,62 @@ architecture rtl of audio_codec_model is
   signal present_state_r: states_type;
 
   -- Counter for output value 's length
-  signal cnt_r : integer range 0 to data_width_g - 1;
+  signal cnt_r : integer range 0 to data_width_g;
   -- Store current value to be deliverd 
   signal curr_value_r: std_logic_vector(data_width_g - 1 downto 0);
   signal last_bit_r : std_logic;             -- Store last cycle's bit data
-  signal check_r : std_logic;                -- check if the correct channel
+  --signal check_r : std_logic;                -- check if the correct channel
                                              -- has deliverd the output
   
 begin
 
   last_bit_r <= aud_data_in;
 
-  sync: process (bclk, rst_n)
+  sync: process (aud_bclk_in, rst_n)
   begin
     if rst_n = '0' then                      -- asynchronous reset (active low)
 
       present_state_r <= wait_for_input;     -- init state
-      curr_value_r <= (others => '0');      
+      curr_value_r <= (others => '0');
+      cnt_r <= 0;
 
-    elsif bclk'event and bclk = '1' then     -- rising bit clock edge
+    elsif aud_bclk_in'event and aud_bclk_in = '1' then     -- rising bit clock edge
 
       case present_state_r is
 
         when wait_for_input =>
-          if lrclk = '1' then
+          if aud_lrclk_in = '1' then
             present_state_r <= read_left;
             cnt_r <= 0;
-            check_r <= '0';
-          else
-            present_state_r <= wait_for_input;
           end if;
 
         when read_left =>
-          if lrclk = '0' then
-            present_state_r <= read_right;
-            check_r <= '0';                 -- move to right channel            
-          else            
-            if check_r = '0' then
+          if aud_lrclk_in = '0' then
+            present_state_r <= read_right;            
+          end if;    
+          if cnt_r = data_width_g then
+             cnt_r <= 0;
+             value_left_out <= curr_value_r;             
+          else
+             curr_value_r(cnt_r) <= last_bit_r;
+             cnt_r <= cnt_r + 1;
+          end if;    
               
-              if cnt_r = data_width_g then
-                cnt_r <= 0;
-                check_r <= '1';
-                curr_value_r <= (others => '0');
-              else
-                curr_value_r(cnt_r) <= last_bit_r;
-                cnt_r <= cnt_r + 1;
-              end if;
-              
-            end if;
-          end if;
 
         when read_right =>
-          if lrclk = '1' then
+          if aud_lrclk_in = '1' then
             present_state_r <= read_left;
-            check_r <= '0';                 -- move to left channel
-          else            
-            if check_r = '0' then
-              
-              if cnt_r = data_width_g then
-                cnt_r <= 0;
-                check_r <= '1';
-                curr_value_r <= (others => '0');
-              else
-                curr_value_r(cnt_r) <= last_bit_r;
-                cnt_r <= cnt_r + 1;
-              end if;
-              
-            end if;
           end if;
+          if cnt_r = data_width_g then
+             value_right_out <= curr_value_r;
+             cnt_r <= 0;             
+          else
+             curr_value_r(cnt_r) <= last_bit_r;
+             cnt_r <= cnt_r + 1;
+          end if;             
             
       end case;
     end if;
   end process sync;
-
-  output : process(present_state_r)
-  begin -- process output
-    
-    case present_state_r is
-      when read_left =>
-        value_left_out <= curr_value_r;
-      when read_right =>
-        value_right_out <= curr_value_r;
-      when others =>
-        value_left_out <= curr_value_r;
-        value_right_out <= curr_value_r;
-    end case;
-    
-  end process output;     
         
 end rtl;

@@ -6,7 +6,7 @@
 -- Author     : Quang
 -- Company    : 
 -- Created    : 2019-11-22
--- Last update: 2020-01-10
+-- Last update: 2020-01-14
 -- Platform   : 
 -- Standard   : VHDL'93/02
 -------------------------------------------------------------------------------
@@ -37,108 +37,82 @@ entity audio_ctrl is
     aud_data_out: out std_logic;                        -- Data output
     aud_lrclk_out: out std_logic                        -- Left-right clock
     );
-end adder;
+end audio_ctrl;
     
 -------------------------------------------------------------------------------
 
 architecture rtl of audio_ctrl is
   
-  constant cnt_width_c : integer := 10;                 -- Default counter's width
-  constant bclk_freq_c : integer := 5e6;                -- Preferred bclk frequency
+  constant min_bclk_period_c : time := 75 ns;           -- Minimun bclk period
+  constant billion_c : integer := 1000000000;                   -- 10^9
+  constant min_bclk_freq_c : integer := billion_c/75;             -- Preferred bclk frequency
   -- Maximum value for counters calculated by taking main clock frequency
   -- divided by the frequencies of bit and word clock
-  constant max_bclk_c : integer := real(ref_clk_freq_g)/real(bclk_freq_c);
-  constant max_lrclk_c : integer := real(ref_clk_freq_g)/real(sample_rate_g);
+  constant max_lrclk_c : integer := (ref_clk_freq_g/sample_rate_g)/2 + 1/2;
+  constant max_bclk_c : integer := (ref_clk_freq_g/min_bclk_freq_c)/2 + 1/2;
 
   -- Registers for counter in two components
-  signal bclk_cnt_r : std_logic_vector(cnt_width_c - 1 downto 0);
-  signal lrclk_cnt_r : std_logic_vector(cnt_width_c - 1 downto 0);
+  signal lrclk_cnt_r : integer range 0 to max_lrclk_c;
+  signal bclk_cnt_r : integer range 0 to max_bclk_c;
 
   -- Registers for outputs
-  signal bclk_r, lrclk_r : std_logic := 0;
-  signal data_out_r : std_logic_vector(2*data_width_g - 1 downto 0);
-  signal output_cnt_r : integer range 0 to 2*data_width_g;
-  signal data_en_r : std_logic;
-    
-  entity counter is
-
-    generic (
-      width_g : integer := 5);
-
-    port (
-      clk          : in  std_logic;
-      max_value_in : in  integer;
-      count_out    : out std_logic_vector(width_g - 1 downto 0));
-
-  end entity counter;
-
-  bclk_counter: entity work.counter
-    generic map (
-      width_g => cnt_width_c)
-    port map (
-      clk          => clk,
-      max_value_in => max_bclk_c,
-      count_out    => bclk_cnt_r);
-
-  lrclk_counter: entity work.counter
-    generic map (
-      width_g => cnt_width_c)
-    port map (
-      clk          => clk,
-      max_value_in => max_lrclk_c,
-      count_out    => lrclk_cnt_r);  
+  signal bclk_r, lrclk_r : std_logic;
+  signal data_out_r : std_logic_vector(data_width_g - 1 downto 0);
+  signal last_bit_r : std_logic; 
   
   begin
         
     bclk_gen: process(clk, rst_n)                       -- Bclk process
+    begin
       if rst_n = '0' then                               -- Asynchonous reset (low)
-        bclk_cnt_r <= (others => '0');
-        bclk_r <= (others => '0');
+        bclk_cnt_r <= 0;
+        bclk_r <= '0';
       elsif clk'EVENT and clk = '1' then                -- Rising edge
-        if to_integer(unsigned(bclk_cnt_r)) = max_bclk_c - 1 then
+        if bclk_cnt_r = max_bclk_c then
           bclk_r <= not bclk_r;                         -- Invert bit clock value
+          bclk_cnt_r <= 0;
+        else
+          bclk_cnt_r <= bclk_cnt_r + 1;
         end if;
       end if;
     end process bclk_gen;
 
     lrclk_gen: process(clk, rst_n)                      -- Lrclk process
+    begin
       if rst_n = '0' then                               -- Asynchonous reset (low)
-        lrclk_cnt_r <= (others => '0');
-        lrclk_r <= (others => '0');
+        lrclk_cnt_r <= 0;
+        lrclk_r <= '0';
       elsif clk'EVENT and clk = '1' then                -- Rising edge
-        if to_integer(unsigned(lrclk_cnt_r)) = max_lrclk_c - 1 then
+        if lrclk_cnt_r = max_lrclk_c then
           lrclk_r <= not lrclk_r;                       -- Invert LR clock value
+          lrclk_cnt_r <= 0;
+        else
+          lrclk_cnt_r <= lrclk_cnt_r + 1;          
         end if;
       end if;
     end process lrclk_gen;
 
     -- Save the snapshot of data inputs
     output: process(clk,rst_n)                          -- Output process
-            
+    begin        
       if rst_n = '0' then                               -- Asynchonous reset (low)
         data_out_r <= (others => '0');
-        output_cnt_r <= 2*data_width_g - 1;
-        data_en_r <= (others => '0');
       elsif clk'EVENT and clk = '1' then                -- Rising edge
         
-        if lrclk_r'EVENT and lrclk_r = '1' then         -- Sample cycle starts
-          data_en_r <= '1';
-          output_cnt_r <= '0';
-          data_out_r <= left_data_in(data_width_g - 1 downto 0) & right_data_in(data_width_g - 1 downto 0);
+        if lrclk_r'EVENT then
+          if lrclk_r = '1' then
+            data_out_r <= left_data_in;
+          else
+            data_out_r <= right_data_in;
+          end if;
         end if;
 
-        if output_cnt_r < 2*data_width_g - 1 then
-          output_cnt_r <= output_cnt_r + 1;
-          data_out_r <= data_out_r(2*data_width_g - 2 downto 0) & '0';
-        else
-          data_en_r <= '0';
-        end if;
-                  
+        data_out_r <= data_out_r(data_width_g - 2 downto 0) & '0';
       end if;
     end process output;
     
     aud_bclk_out <= bclk_r;
     aud_lrclk_out <= lrclk_r;
-    aud_data_out <= data_out_r(2*data_width_g - 1);
+    aud_data_out <= data_out_r(data_width_g - 1);
            
 end rtl;
