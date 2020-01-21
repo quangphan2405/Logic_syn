@@ -86,11 +86,7 @@ begin  -- structural
 
 
   clk   <= not clk after clk_period_c/2;  -- kellon generointi
-<<<<<<< HEAD
   rst_n <= '1'     after 4*clk_period_c;  -- reset pois neljän kellojakson jälkeen
-=======
-  rst_n <= '1'     after 4*clk_period_c;  -- reset pois neljÃ¤n kellojakson jÃ¤lkeen
->>>>>>> 7cadb9c5a6363b1696b3735d03c16f3a8f8ffcee
 
   i_duv_synth : synthesizer
     generic map (
