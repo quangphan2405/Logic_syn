@@ -43,6 +43,7 @@ end synthesizer;
 architecture rtl of synthesizer is
   
   signal wave_0, wave_1, wave_2, wave_3: std_logic_vector(data_width_g - 1 downto 0);
+  -- Input and output for multi_port_adder
   signal wave_input: std_logic_vector(data_width_g * n_keys_g - 1 downto 0);
   signal wave_data: std_logic_vector(data_width_g - 1 downto 0);
 
@@ -89,7 +90,7 @@ architecture rtl of synthesizer is
 
   begin
 
-    wave_input <= wave_3 & wave_2 & wave_1 & wave_0;
+    wave_input <= wave_3 & wave_2 & wave_1 & wave_0; -- Combine waves from wave_gen
     
     assert (n_keys_g = 4)
     report "There must be exactly 4 buttons."
@@ -158,6 +159,5 @@ architecture rtl of synthesizer is
         aud_bclk_out  => aud_bclk_out,
         aud_data_out  => aud_data_out,
         aud_lrclk_out => aud_lrclk_out);
-
     
 end rtl;
