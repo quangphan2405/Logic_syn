@@ -1,0 +1,33 @@
+Declaration section of architecture:
+
+architecture RTL of audio_ctrl is
+
+	-- lrclk frequency is same as sampling frequency.
+	constant lrclk_counter_steps_c : integer := ref_clk_freq_g / sample_rate_g / 2;
+
+	-- Calculate required number of steps to bclk counter.
+	constant min_bclk_period_c        : integer := 75; -- ns, read from datasheet.
+	constant one_second_as_nanos_c    : integer := 1000000000;
+	-- One step is add to round up, or to add safety marginal if division is exact.
+	constant bclk_counter_steps_c : integer := (min_bclk_period_c / (one_second_as_nanos_c / ref_clk_freq_g) / 2) + 1;
+
+	-- Registers for samples and currently transmitted bit index.
+	signal left_sample_r, right_sample_r : std_logic_vector(data_width_g - 1 downto 0);
+	signal bit_index_r                   : integer range -1 to data_width_g - 1;
+
+	-- Counters for generated clocks.
+	signal bclk_counter_r  : integer range 0 to bclk_counter_steps_c - 1;
+	signal lrclk_counter_r : integer range 0 to lrclk_counter_steps_c - 1;
+
+  -- Registers for outputs
+	signal bclk_r, lrclk_r, data_out_r : std_logic;
+
+
+Summary of process:
+
+Architecture has a single synchronous process. At the rising edge of the clock, the value of lrclk_counter_r is checked, and it is incremented if it is not in max value, and resetted if it is. With reset, the lrclk_r is inverted. If lrclk_r was 0, so it is rising edge of lrclk, samples are read from data inputs to registers.
+
+Bclk is generated in similar fashion. On rising edge of bclk, if bit_index_r is not equal to -1, is bit_index_r decremented and next bit transmitted from the sample. State of lrclk_r is checked to choose correct channel to transmit.
+
+
+
