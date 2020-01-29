@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2017.2 (64-bit)
+# SW Build 1909853 on Thu Jun 15 18:39:09 MDT 2017
+# IP Build 1909766 on Thu Jun 15 19:58:00 MDT 2017
+# Start of session at: Wed Jan 29 19:35:09 2020
+# Process ID: 5648
+# Current directory: P:/Logic_synthesis/21/syn/E10_project/synth_top/synth_top.runs/synth_1
+# Command line: vivado.exe -log system_top_level_wrapper.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source system_top_level_wrapper.tcl
+# Log file: P:/Logic_synthesis/21/syn/E10_project/synth_top/synth_top.runs/synth_1/system_top_level_wrapper.vds
+# Journal file: P:/Logic_synthesis/21/syn/E10_project/synth_top/synth_top.runs/synth_1\vivado.jou
+#-----------------------------------------------------------
+source system_top_level_wrapper.tcl -notrace

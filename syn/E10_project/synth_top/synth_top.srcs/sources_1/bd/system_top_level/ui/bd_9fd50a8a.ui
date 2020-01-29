@@ -1,0 +1,36 @@
+{
+   guistr: "# # String gsaved with Nlview 6.6.8  2016-12-21 bk=1.3817 VDI=40 GEI=35 GUI=JA:1.6
+#  -string -flagsOSRD
+preplace port pin_clk125mhz -pg 1 -y 90 -defaultsOSRD
+preplace port pin_aud_data -pg 1 -y 330 -defaultsOSRD
+preplace port pin_aud_lrclk -pg 1 -y 310 -defaultsOSRD
+preplace port pin_rst_n -pg 1 -y 280 -defaultsOSRD
+preplace port pin_aud_mclk -pg 1 -y 190 -defaultsOSRD
+preplace port pin_aud_bitclk -pg 1 -y 290 -defaultsOSRD
+preplace port pin_i2c_sdata -pg 1 -y 50 -defaultsOSRD
+preplace port pin_i2c_sclk -pg 1 -y 70 -defaultsOSRD
+preplace portBus pin_leds_i2c -pg 1 -y 130 -defaultsOSRD
+preplace portBus pin_keys -pg 1 -y 330 -defaultsOSRD
+preplace inst i2c_config_0 -pg 1 -lvl 2 -y 80 -defaultsOSRD
+preplace inst synthesizer_0 -pg 1 -lvl 3 -y 310 -defaultsOSRD
+preplace inst util_vector_logic_0 -pg 1 -lvl 1 -y 270 -defaultsOSRD
+preplace inst util_vector_logic_1 -pg 1 -lvl 3 -y 130 -defaultsOSRD
+preplace inst clk_wiz_0 -pg 1 -lvl 1 -y 90 -defaultsOSRD
+preplace netloc i2c_config_0_sclk_out 1 2 2 NJ 70 NJ
+preplace netloc clk_wiz_0_locked 1 0 2 10 20 310
+preplace netloc pin_rst_n_1 1 0 1 NJ
+preplace netloc pin_keys_1 1 0 3 NJ 330 NJ 330 670
+preplace netloc util_vector_logic_0_Res 1 1 2 320 270 650
+preplace netloc synthesizer_0_aud_data_out 1 3 1 NJ
+preplace netloc synthesizer_0_aud_bclk_out 1 3 1 NJ
+preplace netloc i2c_config_0_param_status_out 1 2 1 670
+preplace netloc synthesizer_0_aud_lrclk_out 1 3 1 NJ
+preplace netloc clk_wiz_0_clk_out1 1 1 1 N
+preplace netloc clk_wiz_0_clk_out2 1 1 3 310J 160 660 190 NJ
+preplace netloc util_vector_logic_1_Res 1 3 1 NJ
+preplace netloc Net 1 2 2 NJ 50 NJ
+preplace netloc pin_clk125mhz_1 1 0 1 NJ
+levelinfo -pg 1 -10 160 490 830 1010 -top 0 -bot 380
+",
+}
+0
