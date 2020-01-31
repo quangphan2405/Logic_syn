@@ -152,7 +152,7 @@ set_property -dict { PACKAGE_PIN U7    IOSTANDARD LVCMOS33 } [get_ports { pin_au
 ## ChipKit I2C
 
 set_property -dict { PACKAGE_PIN P16   IOSTANDARD LVCMOS33 } [get_ports { pin_i2c_sclk }]; #IO_L24N_T3_34 Sch=ck_scl
-set_property -dict { PACKAGE_PIN P15   IOSTANDARD LVCMOS33 } [get_ports { pin_i2c_sclk }]; #IO_L24P_T3_34 Sch=ck_sda
+set_property -dict { PACKAGE_PIN P15   IOSTANDARD LVCMOS33 } [get_ports { pin_i2c_sdata }]; #IO_L24P_T3_34 Sch=ck_sda
 
 ##HDMI Rx
 
