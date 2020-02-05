@@ -1,0 +1,23 @@
+Utilization of the board:
+  1. LUTs: 271 / 0.51%
+   FFs : 224 / 0.21% 
+   IOs : 16  / 12.80%
+   PLLs: 1   / 25.00%
+  2. Divison of resource usage block by block
+   "Slice LUTs / Slice registers / Slice"
+   i2c bus controller  : 74 / 63 / 24
+   i_wave_gen_0        : 28 / 17 / 9
+   i_wave_gen_1        : 44 / 17 / 13
+   i_wave_gen_2        : 27 / 16 / 9
+   i_wave_gen_3        : 41 / 15 / 14
+   multiport adder     : 22 / 47 / 18
+   audio ctrl          : 30 / 33 / 12
+
+Timing for "clk_out1" and "clk_out2"
+  1. Requirement period (ns) and slack (ns):
+clk_out1: 20.000 / 14.82
+clk_out2: 81.38 / 76.08
+  2. Minimum clock period (ns) and max freq (MHz)
+clk_out1: 5.18 / 192
+clk_out2: 5.30 / 188
+  3. We managed to run it successfully in the first test. 	

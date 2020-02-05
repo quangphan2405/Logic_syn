@@ -12,15 +12,15 @@ source system_top_level_wrapper.tcl -notrace
 INFO: [IP_Flow 19-234] Refreshing IP repositories
 INFO: [IP_Flow 19-1704] No user IP repositories specified
 INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Apps/Xilinx_Vivado2017/Vivado/2017.2/data/ip'.
-add_files: Time (s): cpu = 00:00:01 ; elapsed = 00:00:07 . Memory (MB): peak = 290.863 ; gain = 19.160
+add_files: Time (s): cpu = 00:00:01 ; elapsed = 00:00:07 . Memory (MB): peak = 290.957 ; gain = 19.160
 Command: synth_design -top system_top_level_wrapper -part xc7z020clg400-1
 Starting synth_design
 Attempting to get a license for feature 'Synthesis' and/or device 'xc7z020-clg400'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7z020-clg400'
 INFO: Launching helper process for spawning children vivado processes
-INFO: Helper process launched with PID 13572 
+INFO: Helper process launched with PID 1124 
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 371.137 ; gain = 77.605
+Starting RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 371.230 ; gain = 77.602
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-638] synthesizing module 'system_top_level_wrapper' [P:/Logic_synthesis/21/syn/E10_project/synth_top/synth_top.srcs/sources_1/bd/system_top_level/hdl/system_top_level_wrapper.vhd:29]
 INFO: [Synth 8-3491] module 'system_top_level' declared at 'P:/Logic_synthesis/21/syn/E10_project/synth_top/synth_top.srcs/sources_1/bd/system_top_level/hdl/system_top_level.vhd:14' bound to instance 'system_top_level_i' of component 'system_top_level' [P:/Logic_synthesis/21/syn/E10_project/synth_top/synth_top.srcs/sources_1/bd/system_top_level/hdl/system_top_level_wrapper.vhd:45]
@@ -424,7 +424,7 @@ INFO: [Synth 8-256] done synthesizing module 'system_top_level_util_vector_logic
 INFO: [Synth 8-256] done synthesizing module 'system_top_level' (32#1) [P:/Logic_synthesis/21/syn/E10_project/synth_top/synth_top.srcs/sources_1/bd/system_top_level/hdl/system_top_level.vhd:33]
 INFO: [Synth 8-256] done synthesizing module 'system_top_level_wrapper' (33#1) [P:/Logic_synthesis/21/syn/E10_project/synth_top/synth_top.srcs/sources_1/bd/system_top_level/hdl/system_top_level_wrapper.vhd:29]
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:05 . Memory (MB): peak = 411.215 ; gain = 117.684
+Finished RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:05 . Memory (MB): peak = 411.309 ; gain = 117.680
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -434,7 +434,7 @@ Report Check Netlist:
 |1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
 +------+------------------+-------+---------+-------+------------------+
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:03 ; elapsed = 00:00:05 . Memory (MB): peak = 411.215 ; gain = 117.684
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:03 ; elapsed = 00:00:05 . Memory (MB): peak = 411.309 ; gain = 117.680
 ---------------------------------------------------------------------------------
 INFO: [Netlist 29-17] Analyzing 7 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
@@ -452,10 +452,13 @@ Resolution: To avoid this warning, move constraints listed in [.Xil/system_top_l
 INFO: [Timing 38-2] Deriving generated clocks
 Parsing XDC File [P:/Logic_synthesis/21/xdc/synth.xdc]
 Finished Parsing XDC File [P:/Logic_synthesis/21/xdc/synth.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [P:/Logic_synthesis/21/xdc/synth.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/system_top_level_wrapper_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/system_top_level_wrapper_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
 Parsing XDC File [P:/Logic_synthesis/21/syn/E10_project/synth_top/synth_top.runs/synth_1/dont_touch.xdc]
 Finished Parsing XDC File [P:/Logic_synthesis/21/syn/E10_project/synth_top/synth_top.runs/synth_1/dont_touch.xdc]
 INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [P:/Logic_synthesis/21/syn/E10_project/synth_top/synth_top.runs/synth_1/dont_touch.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/system_top_level_wrapper_propImpl.xdc].
 Resolution: To avoid this warning, move constraints listed in [.Xil/system_top_level_wrapper_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+INFO: [Timing 38-2] Deriving generated clocks
 Parsing XDC File [p:/Logic_synthesis/21/syn/E10_project/synth_top/synth_top.srcs/sources_1/bd/system_top_level/ip/system_top_level_clk_wiz_0_0/system_top_level_clk_wiz_0_0_late.xdc] for cell 'system_top_level_i/clk_wiz_0/inst'
 Finished Parsing XDC File [p:/Logic_synthesis/21/syn/E10_project/synth_top/synth_top.srcs/sources_1/bd/system_top_level/ip/system_top_level_clk_wiz_0_0/system_top_level_clk_wiz_0_0_late.xdc] for cell 'system_top_level_i/clk_wiz_0/inst'
 Completed Processing XDC Constraints
@@ -465,16 +468,16 @@ INFO: [Project 1-111] Unisim Transformation Summary:
   BUFGCE => BUFGCTRL: 2 instances
   IOBUF => IOBUF (IBUF, OBUFT): 1 instances
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.008 . Memory (MB): peak = 735.266 ; gain = 0.000
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.009 . Memory (MB): peak = 739.320 ; gain = 0.000
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:11 ; elapsed = 00:00:15 . Memory (MB): peak = 735.266 ; gain = 441.734
+Finished Constraint Validation : Time (s): cpu = 00:00:11 ; elapsed = 00:00:15 . Memory (MB): peak = 739.320 ; gain = 445.691
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7z020clg400-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:11 ; elapsed = 00:00:15 . Memory (MB): peak = 735.266 ; gain = 441.734
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:11 ; elapsed = 00:00:15 . Memory (MB): peak = 739.320 ; gain = 445.691
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
@@ -487,7 +490,7 @@ Applied set_property DONT_TOUCH = true for system_top_level_i/synthesizer_0. (co
 Applied set_property DONT_TOUCH = true for system_top_level_i/util_vector_logic_0. (constraint file  auto generated constraint, line ).
 Applied set_property DONT_TOUCH = true for system_top_level_i/util_vector_logic_1. (constraint file  auto generated constraint, line ).
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:11 ; elapsed = 00:00:15 . Memory (MB): peak = 735.266 ; gain = 441.734
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:11 ; elapsed = 00:00:15 . Memory (MB): peak = 739.320 ; gain = 445.691
 ---------------------------------------------------------------------------------
 WARNING: [Synth 8-6014] Unused sequential element current_value_reg was removed.  [P:/Logic_synthesis/21/vhd/wave_gen.vhd:51]
 WARNING: [Synth 8-6014] Unused sequential element current_value_reg was removed.  [P:/Logic_synthesis/21/vhd/wave_gen.vhd:51]
@@ -496,7 +499,7 @@ WARNING: [Synth 8-6014] Unused sequential element current_value_reg was removed.
 WARNING: [Synth 8-6014] Unused sequential element bit_index_r_reg was removed.  [P:/Logic_synthesis/21/vhd/audio_ctrl.vhd:90]
 WARNING: [Synth 8-6014] Unused sequential element lrclk_counter_r_reg was removed.  [P:/Logic_synthesis/21/vhd/audio_ctrl.vhd:62]
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:11 ; elapsed = 00:00:15 . Memory (MB): peak = 735.266 ; gain = 441.734
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:11 ; elapsed = 00:00:15 . Memory (MB): peak = 739.320 ; gain = 445.691
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -633,7 +636,7 @@ INFO: [Synth 8-3332] Sequential element (U0/i_multi_port_adder/sum_adder/result_
 INFO: [Synth 8-3333] propagating constant 0 across sequential element (system_top_level_i/synthesizer_0/\U0/i_multi_port_adder/adder_1/result_reg[0] )
 INFO: [Synth 8-3332] Sequential element (U0/i_multi_port_adder/adder_1/result_reg[0]) is unused and will be removed from module system_top_level_synthesizer_0_0.
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:12 ; elapsed = 00:00:16 . Memory (MB): peak = 735.266 ; gain = 441.734
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:12 ; elapsed = 00:00:16 . Memory (MB): peak = 739.320 ; gain = 445.691
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -645,13 +648,13 @@ Report RTL Partitions:
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:19 ; elapsed = 00:00:24 . Memory (MB): peak = 735.266 ; gain = 441.734
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:20 ; elapsed = 00:00:25 . Memory (MB): peak = 739.320 ; gain = 445.691
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:19 ; elapsed = 00:00:24 . Memory (MB): peak = 735.266 ; gain = 441.734
+Finished Timing Optimization : Time (s): cpu = 00:00:20 ; elapsed = 00:00:25 . Memory (MB): peak = 739.320 ; gain = 445.691
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -663,7 +666,7 @@ Report RTL Partitions:
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:20 ; elapsed = 00:00:24 . Memory (MB): peak = 735.266 ; gain = 441.734
+Finished Technology Mapping : Time (s): cpu = 00:00:20 ; elapsed = 00:00:25 . Memory (MB): peak = 739.320 ; gain = 445.691
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -687,7 +690,7 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:20 ; elapsed = 00:00:25 . Memory (MB): peak = 735.266 ; gain = 441.734
+Finished IO Insertion : Time (s): cpu = 00:00:20 ; elapsed = 00:00:25 . Memory (MB): peak = 739.320 ; gain = 445.691
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -700,7 +703,7 @@ Report Check Netlist:
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:20 ; elapsed = 00:00:25 . Memory (MB): peak = 735.266 ; gain = 441.734
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:20 ; elapsed = 00:00:25 . Memory (MB): peak = 739.320 ; gain = 445.691
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -712,25 +715,25 @@ Report RTL Partitions:
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:20 ; elapsed = 00:00:25 . Memory (MB): peak = 735.266 ; gain = 441.734
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:20 ; elapsed = 00:00:26 . Memory (MB): peak = 739.320 ; gain = 445.691
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:20 ; elapsed = 00:00:25 . Memory (MB): peak = 735.266 ; gain = 441.734
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:20 ; elapsed = 00:00:26 . Memory (MB): peak = 739.320 ; gain = 445.691
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:20 ; elapsed = 00:00:25 . Memory (MB): peak = 735.266 ; gain = 441.734
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:20 ; elapsed = 00:00:26 . Memory (MB): peak = 739.320 ; gain = 445.691
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:20 ; elapsed = 00:00:25 . Memory (MB): peak = 735.266 ; gain = 441.734
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:20 ; elapsed = 00:00:26 . Memory (MB): peak = 739.320 ; gain = 445.691
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -791,11 +794,11 @@ Report Instance Areas:
 |20    |      inst                 |util_vector_logic_v2_0_1_util_vector_logic__parameterized0 |     4|
 +------+---------------------------+-----------------------------------------------------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:20 ; elapsed = 00:00:25 . Memory (MB): peak = 735.266 ; gain = 441.734
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:20 ; elapsed = 00:00:26 . Memory (MB): peak = 739.320 ; gain = 445.691
 ---------------------------------------------------------------------------------
 Synthesis finished with 0 errors, 0 critical warnings and 13 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:12 ; elapsed = 00:00:19 . Memory (MB): peak = 735.266 ; gain = 117.684
-Synthesis Optimization Complete : Time (s): cpu = 00:00:20 ; elapsed = 00:00:25 . Memory (MB): peak = 735.266 ; gain = 441.734
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:12 ; elapsed = 00:00:19 . Memory (MB): peak = 739.320 ; gain = 117.680
+Synthesis Optimization Complete : Time (s): cpu = 00:00:20 ; elapsed = 00:00:26 . Memory (MB): peak = 739.320 ; gain = 445.691
 INFO: [Project 1-571] Translating synthesized netlist
 INFO: [Netlist 29-17] Analyzing 56 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
@@ -820,9 +823,9 @@ INFO: [Project 1-111] Unisim Transformation Summary:
   BUFGCE => BUFGCTRL: 2 instances
   IOBUF => IOBUF (IBUF, OBUFT): 1 instances
 
-262 Infos, 20 Warnings, 0 Critical Warnings and 0 Errors encountered.
+264 Infos, 20 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:21 ; elapsed = 00:00:30 . Memory (MB): peak = 735.266 ; gain = 444.402
+synth_design: Time (s): cpu = 00:00:22 ; elapsed = 00:00:31 . Memory (MB): peak = 739.320 ; gain = 448.363
 INFO: [Common 17-1381] The checkpoint 'P:/Logic_synthesis/21/syn/E10_project/synth_top/synth_top.runs/synth_1/system_top_level_wrapper.dcp' has been generated.
-report_utilization: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.022 . Memory (MB): peak = 735.266 ; gain = 0.000
-INFO: [Common 17-206] Exiting Vivado at Wed Jan 29 19:35:55 2020...
+report_utilization: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.022 . Memory (MB): peak = 739.320 ; gain = 0.000
+INFO: [Common 17-206] Exiting Vivado at Thu Jan 30 12:37:12 2020...

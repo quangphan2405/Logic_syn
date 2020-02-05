@@ -1,8 +1,8 @@
 Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2017.2 (win64) Build 1909853 Thu Jun 15 18:39:09 MDT 2017
-| Date         : Wed Jan 29 19:35:55 2020
-| Host         : HTC219-720-SPC running 64-bit major release  (build 9200)
+| Date         : Thu Jan 30 12:37:12 2020
+| Host         : HTC219-715-SPC running 64-bit major release  (build 9200)
 | Command      : report_utilization -file system_top_level_wrapper_utilization_synth.rpt -pb system_top_level_wrapper_utilization_synth.pb
 | Design       : system_top_level_wrapper
 | Device       : 7z020clg400-1
