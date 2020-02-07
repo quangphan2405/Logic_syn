@@ -12,6 +12,7 @@
 -- Revisions  :
 -- Date        Version  Author  			Description
 -- 2020-01-31  1.0      Paulus Limma	    Created
+-- 2020-02-02  1.1      Paulus Limma	    Implement param_status_out
 -------------------------------------------------------------------------------
 
 library ieee;
@@ -46,7 +47,14 @@ architecture RTL of i2c_config is
 	constant sclk_counter_steps_c      : integer := ref_clk_freq_g / i2c_freq_g;
 	constant sclk_counter_half_steps_c : integer := sclk_counter_steps_c / 2;
 
-	type state_type is (start_cond, slave_addr_transmit, reg_addr_transmit, data_transmit, wait_ack, stop_cond, finished);
+	type state_type is (start_cond,
+	                    slave_addr_transmit,
+	                    reg_addr_transmit,
+	                    data_transmit,
+	                    wait_ack,
+	                    stop_cond,
+	                    finished
+	                   );
 	signal state_r               : state_type;
 	signal wait_ack_next_state_r : state_type;
 
@@ -106,7 +114,7 @@ begin
 			case state_r is
 				when start_cond =>
 					sdat_r         <= '0';
-					-- Reset the sclk_r to high-level (Z), so that start condition hold time will be met.
+					-- Reset the sclk_r to high-level, so that start condition hold time will be met.
 					sclk_counter_r <= 0;
 					sclk_r         <= '1';
 
@@ -155,8 +163,8 @@ begin
 		end if;
 	end process;
 
-	sdat_inout   <= sdat_r;
-	sclk_out     <= sclk_r;
-	finished_out <= finished_out_r;
-	param_status_out <= "0000"; -- TODO
+	sdat_inout       <= sdat_r;
+	sclk_out         <= sclk_r;
+	finished_out     <= finished_out_r;
+	param_status_out <= std_logic_vector(to_unsigned(param_index_r, n_leds_g));
 end architecture RTL;
