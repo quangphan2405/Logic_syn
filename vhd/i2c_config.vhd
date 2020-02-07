@@ -2,11 +2,11 @@
 -- Title      : Exercise 11
 -- Project    : 
 -------------------------------------------------------------------------------
--- File       : i2c_config
+-- File       : i2c_config.vhd
 -- Author     : Group 21
 -- Company    : 
 -- Created    : 2020-02-05
--- Last update: 2020-02-05
+-- Last update: 2020-02-06
 -- Platform   : 
 -- Standard   : VHDL'93/02
 -------------------------------------------------------------------------------
@@ -28,7 +28,7 @@ entity i2c_config is
     ref_clk_freq_g  : integer := 50000000;
     i2c_freq_g      : integer := 20000;
     n_params_g      : integer := 15;
-    n_leds_g        : integer :=4
+    n_leds_g        : integer := 4
     );
   port(
     clk, rst_n      : in  std_logic;
