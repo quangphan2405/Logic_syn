@@ -1,0 +1,17 @@
+Our only (synchronous) process generates the sclk clock with the counter. It also contains state logic. There are seven states:
+
+type state_type is (start_cond,
+	                    slave_addr_transmit,
+	                    reg_addr_transmit,
+	                    data_transmit,
+	                    wait_ack,
+	                    stop_cond,
+	                    finished
+	                   );
+
+We have registered signals for current param index and current bit index. States from start_cond to stop_cond will be repeated 15 times, and each time slave address, register address and data value are sent sequentially. ACK or NACK is read after each byte. If NACK is received, we will move back to the start_cond. After all transmissions, the finished_out will be set to 1.
+
+
+Configuration value DAI_CTRL. Address found from page 62 and values from page 76.
+  Address: 0x29 (0010 1001)
+  Value: 1000 0001
