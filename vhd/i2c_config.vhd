@@ -13,6 +13,7 @@
 -- Date        Version  Author  			Description
 -- 2020-01-31  1.0      Paulus Limma	    Created
 -- 2020-02-02  1.1      Paulus Limma	    Implement param_status_out
+-- 2020-02-12  1.2      Paulus Limma	   	Some fixes
 -------------------------------------------------------------------------------
 
 library ieee;
@@ -41,8 +42,36 @@ architecture RTL of i2c_config is
 	constant slave_addr_and_rw_bit_c : std_logic_vector(7 downto 0) := "0011010" & '0';
 
 	type param_array_type is array (0 to n_params_g - 1) of std_logic_vector(byte_width_c - 1 downto 0);
-	constant param_addresses_c : param_array_type := ("01010101", "11110101");
-	constant param_values_c    : param_array_type := ("11001100", "00110011");
+	constant param_addresses_c : param_array_type := ("00011101",
+	                                                  "00100111",
+	                                                  "00100010",
+	                                                  "00101000",
+	                                                  "00101001",
+	                                                  "01101001",
+	                                                  "01101010",
+	                                                  "01000111",
+	                                                  "01101011",
+	                                                  "01101100",
+	                                                  "01001011",
+	                                                  "01001100",
+	                                                  "01101110",
+	                                                  "01101111",
+	                                                  "01010001");
+	constant param_values_c    : param_array_type := ("10000000",
+	                                                  "00000100",
+	                                                  "00001011",
+	                                                  "00000000",
+	                                                  "10000001",
+	                                                  "00001000",
+	                                                  "00000000",
+	                                                  "11100001",
+	                                                  "00001001",
+	                                                  "00001000",
+	                                                  "00001000",
+	                                                  "00001000",
+	                                                  "10001000",
+	                                                  "10001000",
+	                                                  "11110001");
 
 	constant sclk_counter_steps_c      : integer := ref_clk_freq_g / i2c_freq_g;
 	constant sclk_counter_half_steps_c : integer := sclk_counter_steps_c / 2;
@@ -113,12 +142,11 @@ begin
 			-- State logic.
 			case state_r is
 				when start_cond =>
-					sdat_r         <= '0';
-					-- Reset the sclk_r to high-level, so that start condition hold time will be met.
-					sclk_counter_r <= 0;
-					sclk_r         <= '1';
-
-					state_r <= slave_addr_transmit;
+					-- Change the value of sda at the middle of the high period of sclk.
+					if (sclk_r = '1' and sclk_counter_r = sclk_counter_half_steps_c) then
+						sdat_r  <= '0';
+						state_r <= slave_addr_transmit;
+					end if;
 				when slave_addr_transmit =>
 					output_next_bit(slave_addr_and_rw_bit_c, reg_addr_transmit);
 				when reg_addr_transmit =>
@@ -126,8 +154,8 @@ begin
 				when data_transmit =>
 					output_next_bit(param_values_c(param_index_r), stop_cond);
 				when wait_ack =>
-					-- On the rising edge of the sclk.
-					if (sclk_counter_r = sclk_counter_steps_c - 1 and sclk_r <= '0') then
+					-- Read ACK/NACK value at the half of the high level of sclk.
+					if (sclk_counter_r = sclk_counter_half_steps_c and sclk_r = '1') then
 						if (sdat_inout <= '0') then
 							-- ACK.
 							state_r <= wait_ack_next_state_r;
@@ -135,19 +163,20 @@ begin
 							-- NACK, reset to start condition of current parameter.
 							state_r        <= start_cond;
 							bit_index_r    <= byte_width_c - 1;
-							sclk_counter_r <= 0;
 							sdat_r         <= '1';
 							sclk_r         <= '1';
 						end if;
 					end if;
 				when stop_cond =>
-					-- Wait for the falling edge of the sclk to fullfill set-up time of STOP condition.
-					if (sclk_counter_r = sclk_counter_steps_c - 1 and sclk_r <= '1') then
+					-- Set sda to low at the middle of low period of sclk.
+					if (sclk_r = '0' and sclk_counter_r = sclk_counter_half_steps_c) then
+						sdat_r <= '0';
+					end if;
+					-- Raise sda at the middle of the high period.
+					if (sclk_r = '1' and sclk_counter_r = sclk_counter_half_steps_c) then
 						-- Generate STOP condition.
 						sdat_r <= '1';
-						-- Force sclk to keep on high level.
-						sclk_r <= '1';
-						-- Move to next parameter or to 'finished'-state.
+						-- Move to start condition of next parameter or to 'finished'-state.
 						if (param_index_r /= n_params_g - 1) then
 							param_index_r <= param_index_r + 1;
 							state_r       <= start_cond;
