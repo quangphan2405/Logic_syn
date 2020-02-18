@@ -18,7 +18,7 @@
 -- Date        Version  Author  			Description
 -- 2020-02-05  1.0      Quang Phan    Created
 -- 2020-02-17  1.1      Quang Phan    Fix and comment
--- 2020-02-18  1.2      Quang Phan    Fix procedure
+-- 2020-02-18  1.2      Quang Phan    Fix proceduregit
 -------------------------------------------------------------------------------
 
 library ieee;
@@ -51,7 +51,7 @@ architecture rtl of i2c_config is
   constant sclk_middle_period_c : integer := sclk_half_period_c/2;         -- middle point of period
   -- Array for saving register addresses and corresponding setting values.
   type param_type is array(0 to n_params_g - 1) of std_logic_vector(byte_width_c - 1 downto 0);
-  constant reg_addresses_c : param_type := ("00011101",
+  constant reg_addresses_c : param_type := ("00010010",
                                             "00100111",
                                             "00100010",
                                             "00101000",
