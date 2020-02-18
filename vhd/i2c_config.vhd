@@ -18,6 +18,7 @@
 -- Date        Version  Author  			Description
 -- 2020-02-05  1.0      Quang Phan    Created
 -- 2020-02-17  1.1      Quang Phan    Fix and comment
+-- 2020-02-18  1.2      Quang Phan    Fix procedure
 -------------------------------------------------------------------------------
 
 library ieee;
@@ -45,7 +46,7 @@ end i2c_config;
 architecture rtl of i2c_config is
   constant byte_width_c         : integer := 8;
   -- Default device address(7-bit) and R/W bit: '0' = write. 
-  constant device_address_c     : std_logic_vector(byte_width_c - 1 down to 0) := "0011010" & '0';
+  constant device_address_c     : std_logic_vector(byte_width_c - 1 downto 0) := "0011010" & '0';
   constant sclk_half_period_c   : integer := ref_clk_freq_g/i2c_freq_g;    -- half period
   constant sclk_middle_period_c : integer := sclk_half_period_c/2;         -- middle point of period
   -- Array for saving register addresses and corresponding setting values.
@@ -89,8 +90,12 @@ architecture rtl of i2c_config is
   signal sclk_cnt_r      : integer range sclk_half_period_c - 1 downto 0;   
   signal sdat_r, sclk_r, finished_out_r : std_logic;                        -- reg for output
 
-  procedure transmit_next_bit(signal current_byte : in std_logic_vector(byte_width_c - 1 downto 0);
-                              signal next_state   : in state_type)
+begin
+
+   sync : process(clk, rst_n) -- Process sync
+
+   procedure transmit_next_bit(current_byte : in std_logic_vector(byte_width_c - 1 downto 0);
+                               next_state   : in state_type) is
     begin
       -- At the middle of SCK LOW period
       if sclk_r = '0' and sclk_cnt_r = sclk_middle_period_c then
@@ -106,17 +111,15 @@ architecture rtl of i2c_config is
           next_state_r <= next_state;
         end if;
       end if;
-    end procedure transmit_next_bit;
+  end procedure transmit_next_bit;
 
-begin
-   sync : process(clk, rst_n) -- Process sync
    begin
      if rst_n = '0' then
        current_state_r <= start;
        next_state_r <= device_address_trans;
 
        sdat_r <= '1';
-       slck_r <= '1';
+       sclk_r <= '1';
        finished_out_r <= '0';
 
        sclk_cnt_r <= 0;
@@ -158,7 +161,7 @@ begin
               current_state_r <= next_state_r;
             -- NACK, start again for the current byte
             else
-              current_byte <= start;
+              current_state_r <= start;
               sdat_r <= '1';
               sclk_r <= '1';
               sclk_cnt_r <= 0;
@@ -170,7 +173,7 @@ begin
           -- Pull SDA low, prepare for STOP condition.
           -- Time for STOP is half period (25 microsec), enough for set-up(4.0) and hold(5.0).
           if sclk_r = '0' and sclk_cnt_r = sclk_middle_period_c then
-            sdat_r = '0';
+            sdat_r <= '0';
           end if;
           -- STOP condition at the middle of HIGH period of SCL
           if sclk_r = '1' and sclk_cnt_r = sclk_middle_period_c then
