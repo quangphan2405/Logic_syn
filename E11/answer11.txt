@@ -1,2 +1,0 @@
-1.
-2. Value of DAI_CTRL: 10000001, found in page 76.
