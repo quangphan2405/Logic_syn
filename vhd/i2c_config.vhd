@@ -102,12 +102,17 @@ begin
 		                          next_state : in state_type
 		                         ) is
 		begin
-			-- Change the value of sda at the middle of the low period of sclk.
-			if (sclk_r = '0' and sclk_counter_r = sclk_counter_half_steps_c) then
-				if (bit_index_r /= -1) then
+			-- If we still have bits to send.
+			if (bit_index_r /= -1) then
+				-- Set next value to SDA at the middle of the low period of sclk.
+				if (sclk_r = '0' and sclk_counter_r = sclk_counter_half_steps_c) then
 					sdat_r      <= bit_vector(bit_index_r);
 					bit_index_r <= bit_index_r - 1;
-				else
+				end if;
+			else
+				-- Release the sda for ACK at the falling edge of sclk.
+				-- Also move to 'wait_ack' state.
+				if (sclk_r = '0' and sclk_counter_r = 0) then
 					bit_index_r           <= byte_width_c - 1;
 					sdat_r                <= 'Z';
 					state_r               <= wait_ack;
@@ -161,10 +166,10 @@ begin
 							state_r <= wait_ack_next_state_r;
 						else
 							-- NACK, reset to start condition of current parameter.
-							state_r        <= start_cond;
-							bit_index_r    <= byte_width_c - 1;
-							sdat_r         <= '1';
-							sclk_r         <= '1';
+							state_r     <= start_cond;
+							bit_index_r <= byte_width_c - 1;
+							sdat_r      <= '1';
+							sclk_r      <= '1';
 						end if;
 					end if;
 				when stop_cond =>
