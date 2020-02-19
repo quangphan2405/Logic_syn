@@ -87,7 +87,7 @@ architecture testbench of tb_i2c_config is
 	signal nack_sent_r : std_logic;
 
 	-- States for the FSM
-	type states is (wait_start, read_byte, send_ack, wait_stop);
+	type states is (wait_start, read_byte, send_ack, wait_stop, finished_state);
 	signal curr_state_r : states;
 
 	-- Previous values of the I2C signals for edge detection
@@ -260,15 +260,22 @@ begin                                   -- testbench
 				---------------------------------------------------------------------
 				-- Wait for the stop condition
 				when wait_stop =>
+					param_counter_r <= param_counter_r;
+					curr_state_r    <= curr_state_r;
 
 					-- Stop condition detection: sdat rises while sclk stays high
 					if sclk = '1' and sclk_old_r = '1' and sdat_old_r = '0' and sdat = '1' then
 
-						param_counter_r <= param_counter_r + 1;
-						curr_state_r    <= wait_start;
+						if (param_counter_r /= n_params_c - 1) then
+							param_counter_r <= param_counter_r + 1;
+							curr_state_r    <= wait_start;
+						else
+							curr_state_r <= finished_state;
 
+						end if;
 					end if;
-
+				when finished_state =>
+					curr_state_r <= finished_state;
 			end case;
 		end if;
 
